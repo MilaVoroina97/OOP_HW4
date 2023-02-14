@@ -4,10 +4,11 @@ public class MyList<T>{
 
     private int size;
     private T[] massiv;
+    private static final int startLength = 1;
 
     public MyList(){
         this.size = 0;
-        this.massiv = (T[]) new Object[1];
+        this.massiv = (T[]) new Object[startLength];
 
     }
 
@@ -23,7 +24,7 @@ public class MyList<T>{
 
     public void add(T elem){
         if(this.size == this.massiv.length) addSize();
-        this.massiv[this.size + 1] = elem;
+        this.massiv[this.size++] = elem;
 
     }
 
@@ -104,7 +105,7 @@ public class MyList<T>{
         Summa summa = new Summa();
         T sum = massiv[0];
         for(int i = 0; i < this.massiv.length; i++){
-            sum = (T) summa.apply(sum,massiv[i+1]);
+            sum = (T) summa.apply(sum,massiv[i]);
         }
         return sum;
 
@@ -149,13 +150,13 @@ public class MyList<T>{
 
         T temp = this.massiv[0];
         if(temp instanceof Comparable){
-            for(int i = 0; i < this.massiv.length - 1; i++){            
+            for(int i = 0; i < this.getSize() - 1; i++){            
 
                 boolean swapped = false;
 
-                for(int j = 0 ; j < this.massiv.length-i-1;i++){
-                    if(comp.compare(this.massiv[j],this.massiv[j+1])> 0){
-                        swap(j,j+1);
+                for(int j = 0 ; j < this.getSize() - i - 1; j++){
+                    if(comp.compare(this.massiv[j],this.massiv[j+1]) > 0){
+                        swap(j, j+1);
                         swapped = true;
                     }
                 }
@@ -239,10 +240,21 @@ public class MyList<T>{
 
     }
 
-    
+    // Печать массива на экран
+    public void printMyList(){
 
+        for(int i = 0; i < this.massiv.length; i++){
+            if(i != this.massiv.length - 1) System.out.print(this.massiv[i] + ",");
+            else System.out.print(this.massiv[i]);
+        }
+    }
+ 
 
+    // Длинна массива
 
+    public int getSize() {
+        return this.size;
+    }
 
     private void swap(int i, int j){
 
@@ -251,14 +263,5 @@ public class MyList<T>{
         this.massiv[j] = temp;
 
     }
-
-
-
-    
-
-
-
-
-
 
 }
